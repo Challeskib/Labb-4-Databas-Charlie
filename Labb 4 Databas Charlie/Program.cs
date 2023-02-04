@@ -7,20 +7,8 @@ namespace Labb_4_Databas_Charlie
         static void Main(string[] args)
         {
 
-            NewSchoolDbContext context = new NewSchoolDbContext();
+            Class.GetStudentsOfClass();
 
-            var allClasses = context.Classes
-                .Where(p => p.ClassId > 0)
-                .OrderBy(p => p.ClassId);
-
-
-
-            //Skriver ut all existerande klasser på skolan
-            Console.WriteLine("Existing Classes:");
-            foreach (Class item in allClasses)
-            {
-                Console.WriteLine(item.ClassName);
-            }
         }
     }
     

@@ -34,7 +34,7 @@ namespace Labb_4_Databas_Charlie
                         PressAnyKeyToContinue();
                         break;
                     case 2:
-                        //GetStudentsOfClass();
+                        Class.GetStudentsOfClass();
                         PressAnyKeyToContinue();
                         break;
                     case 3:

@@ -13,7 +13,7 @@ public partial class Class
 
     public virtual ICollection<Teacher> Teachers { get; } = new List<Teacher>();
 
-    public static void PrintAllClasses()
+    public static int PrintAllClasses()
     {
         NewSchoolDbContext context = new NewSchoolDbContext();
 
@@ -21,15 +21,33 @@ public partial class Class
             .Where(p => p.ClassId > 0)
             .OrderBy(p => p.ClassId);
 
-        
+        List<Class> existingClasses = new List<Class>();
 
-        //Skriver ut all existerande klasser på skolan
+
+        //Addar alla existerande klasser till listan
         Console.WriteLine("Existing Classes:");
         foreach (Class item in allClasses)
         {
-            Console.WriteLine(item.ClassName);
+            existingClasses.Add(item);
         }
 
+        int counter = 0;
+
+        foreach (var item in existingClasses)
+        {
+            
+            Console.WriteLine($"{counter+1}. {item.ClassName}");
+            counter++;
+        }
+
+        Console.WriteLine("\nWhich class do you want to view?");
+        
+        int selectedClass;
+        selectedClass = int.Parse(Console.ReadLine());
+
+        Class class1 = existingClasses[selectedClass - 1];
+
+        return class1.ClassId;
     }
 
     public static void GetStudentsOfClass()
@@ -42,62 +60,68 @@ public partial class Class
         Console.WriteLine("Sort students by ascending (1) or descending (2) order?");
         int sortOrder = Convert.ToInt32(Console.ReadLine());
 
-        PrintAllClasses();
+        int selectedClass = PrintAllClasses();
 
-        string selectedClass = string.Empty;
-
-        Console.WriteLine("\nWhich class do you want to view?");
-        selectedClass = Console.ReadLine();
-
-
-
-        //var studentsInClass = context.Students
-        //    .Where(p => p.ClassId == selectedClass);
+        var studentsInClass = context.Students
+            .Where(p => p.ClassId == selectedClass);
 
         //Switch meny som bestämmer hur studenterna skall sorteras
-        //switch (sortBy)
-        //{
-        //    case 1:
-        //        switch (sortOrder)
-        //        {
-        //            case 1:
-        //                studentsInClass = studentsInClass.OrderBy(p => p.FirstName);
-        //                break;
-        //            case 2:
-        //                studentsInClass = studentsInClass.OrderByDescending(p => p.FirstName);
-        //                break;
-        //            default:
-        //                Console.WriteLine("Invalid option. Sorting by ascending order by default.");
-        //                studentsInClass = studentsInClass.OrderBy(p => p.FirstName);
-        //                break;
-        //        }
-        //        break;
-        //    case 2:
-        //        switch (sortOrder)
-        //        {
-        //            case 1:
-        //                studentsInClass = studentsInClass.OrderBy(p => p.LastName);
-        //                break;
-        //            case 2:
-        //                studentsInClass = studentsInClass.OrderByDescending(p => p.LastName);
-        //                break;
-        //            default:
-        //                Console.WriteLine("Invalid option. Sorting by ascending order by default.");
-        //                studentsInClass = studentsInClass.OrderBy(p => p.LastName);
-        //                break;
-        //        }
-        //        break;
-        //    default:
-        //        Console.WriteLine("Invalid option. Sorting by first name in ascending order by default.");
-        //        studentsInClass = studentsInClass.OrderBy(p => p.FirstName);
-        //        break;
-        //}
+        switch (sortBy)
+        {
+            case 1:
+                switch (sortOrder)
+                {
+                    case 1:
+                        studentsInClass = studentsInClass.OrderBy(p => p.Fname);
+                        break;
+                    case 2:
+                        studentsInClass = studentsInClass.OrderByDescending(p => p.Fname);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Sorting by ascending order by default.");
+                        studentsInClass = studentsInClass.OrderBy(p => p.Fname);
+                        break;
+                }
+                break;
+            case 2:
+                switch (sortOrder)
+                {
+                    case 1:
+                        studentsInClass = studentsInClass.OrderBy(p => p.Lname);
+                        break;
+                    case 2:
+                        studentsInClass = studentsInClass.OrderByDescending(p => p.Lname);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option. Sorting by ascending order by default.");
+                        studentsInClass = studentsInClass.OrderBy(p => p.Lname);
+                        break;
+                }
+                break;
+            default:
+                Console.WriteLine("Invalid option. Sorting by first name in ascending order by default.");
+                studentsInClass = studentsInClass.OrderBy(p => p.Fname);
+                break;
+        }
 
-        //Console.WriteLine($"\nStudents in class {selectedClass}:");
-        //foreach (Student item in studentsInClass)
-        //{
-        //    Console.WriteLine($"Name: {item.FirstName} {item.LastName}");
-        //}
+        var allClasses = context.Classes
+            .Where(p => p.ClassId > 0)
+            .OrderBy(p => p.ClassId);
+
+        foreach (var item in allClasses)
+        {
+            if (item.ClassId == selectedClass)
+            {
+                Console.WriteLine($"\nStudents in class: {item.ClassName}");
+            }
+        }
+        
+        //{ context.Classes.Where(p => p.ClassId == selectedClass)}
+
+        foreach (Student item in studentsInClass)
+        {
+            Console.WriteLine($"Name: {item.Fname} {item.Lname}");
+        }
 
     }
 }
