@@ -6,10 +6,13 @@ namespace Labb_4_Databas_Charlie
     {
         static void Main(string[] args)
         {
+            RunProgram();
+        }
 
-            Class.GetStudentsOfClass();
-
+        static void RunProgram()
+        {
+            Utility.RunMenu();
         }
     }
-    
+
 }

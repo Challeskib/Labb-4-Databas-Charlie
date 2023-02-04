@@ -18,4 +18,23 @@ public partial class Teacher
     public virtual Staff? Staff { get; set; }
 
     public virtual ICollection<TeacherCourse> TeacherCourses { get; } = new List<TeacherCourse>();
+
+    public static void ViewAllTeachers()
+    {
+        NewSchoolDbContext context = new NewSchoolDbContext();
+
+        var allTeachers = context.Teachers
+            .Where(p => p.TeacherId > 0)
+            .Join(context.Staff,
+                  teacher => teacher.StaffId,
+                  staff => staff.StaffId,
+                  (teacher, staff) => new { Teacher = teacher, Staff = staff });
+
+        foreach (var teacher in allTeachers)
+        {
+            Console.WriteLine("Teacher ID: {0}, Name: {1} {2}", teacher.Teacher.TeacherId, teacher.Staff.Fname, teacher.Staff.Lname);
+        }
+
+
+    }
 }

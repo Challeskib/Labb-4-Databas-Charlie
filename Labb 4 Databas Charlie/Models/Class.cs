@@ -116,8 +116,6 @@ public partial class Class
             }
         }
         
-        //{ context.Classes.Where(p => p.ClassId == selectedClass)}
-
         foreach (Student item in studentsInClass)
         {
             Console.WriteLine($"Name: {item.Fname} {item.Lname}");

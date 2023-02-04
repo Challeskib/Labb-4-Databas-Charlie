@@ -88,6 +88,6 @@ public partial class Student
         }
 
     }
-
+    
 
 }

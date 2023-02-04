@@ -23,7 +23,12 @@ namespace Labb_4_Databas_Charlie
                 Console.WriteLine("2. List all students of a certain class");
                 Console.WriteLine("3. Add new staff");
                 Console.WriteLine("4. View all staffmembers");
-                Console.WriteLine("5. Exit program");
+                Console.WriteLine("5. View all active courses");
+                Console.WriteLine("6. View all non-active courses");
+                Console.WriteLine("7. View all teachers");
+
+
+                Console.WriteLine("10. Exit program");
 
                 int choice = Convert.ToInt32(Console.ReadLine());
 
@@ -42,11 +47,34 @@ namespace Labb_4_Databas_Charlie
                         PressAnyKeyToContinue();
                         break;
                     case 4:
-                        //GetAllStaff();
+                        Staff.GetAllStaff();
                         PressAnyKeyToContinue();
                         break;
 
                     case 5:
+                        Course.GetAllActiveCourses();
+                        PressAnyKeyToContinue();
+                        break;
+                    case 6:
+                        Course.GetAllNonActiveCourses();
+                        PressAnyKeyToContinue();
+                        break;
+                    case 7:
+                        Teacher.ViewAllTeachers();
+                        PressAnyKeyToContinue();
+                        break;
+
+                    case 8:
+
+                        PressAnyKeyToContinue();
+                        break;
+
+                    case 9:
+
+                        PressAnyKeyToContinue();
+                        break;
+
+                    case 10:
                         isLooping = false;
                         break;
 
